@@ -1,4 +1,5 @@
 import { ItemPedido } from "../model/ItemPedido.js";
+import type { ItemPedidoCreateDTO, ItemPedidoUpdateDTO } from "../dto/itemPedidodto.js";
 import type { Request, Response } from "express";
 
 class ItemPedidoController extends ItemPedido {
@@ -16,7 +17,7 @@ class ItemPedidoController extends ItemPedido {
 
     static async novo(req: Request, res: Response): Promise<Response> {
         try {
-            const dados = req.body;
+            const dados = req.body as ItemPedidoCreateDTO;
             const item = new ItemPedido(
                 dados.idVenda,
                 dados.idProduto,
@@ -40,7 +41,7 @@ class ItemPedidoController extends ItemPedido {
         try {
             const idVenda = Number(req.params.idVenda);
             const idProduto = Number(req.params.idProduto);
-            const campos = req.body;
+            const campos = req.body as ItemPedidoUpdateDTO;
             const ok = await ItemPedido.atualizarItem(idVenda, idProduto, campos);
 
             return ok
